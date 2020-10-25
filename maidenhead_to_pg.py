@@ -133,8 +133,14 @@ def main():
         subgrid = read_shapefile(shp)
         grid = dissolve_subgrids(subgrid)
 
-        write_grid_to_db(grid)
-        write_subgrid_to_db(subgrid)
+        query_result = session.query(maidenhead_grid.id).filter_by(grid=grid.grid).first()
+
+        if not query_result:
+            write_grid_to_db(grid)
+            write_subgrid_to_db(subgrid)
+        else:
+            print(query_result)
+            print(f"{grid} already exists in DB. Skipping.")
 
 
 if __name__ == '__main__':
