@@ -139,7 +139,7 @@ def main():
             write_grid_to_db(grid)
             write_subgrid_to_db(subgrid)
         else:
-            print(f"{grid} already exists in DB. Skipping.")
+            print(f"{grid.grid} already exists in DB. Skipping.")
 
 
 if __name__ == '__main__':
