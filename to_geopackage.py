@@ -63,13 +63,13 @@ def get_grid_centroids(grid):
     # Query polygon centroid
     if len(grid) == 6:
         accuracy = 6
-        cursor.execute("SELECT ST_Centroid(geom) as geom FROM vectors.maidenhead_grid WHERE "
-                       "subgrid = '{0}'".format(grid))
+        cursor.execute(f"SELECT ST_Centroid(geom) as geom FROM vectors.maidenhead_grid WHERE "
+                       "subgrid = '{grid}'")
 
     elif len(grid) == 4:
         accuracy = 4
-        cursor.execute("SELECT ST_Centroid(geom) as geom FROM vectors.maidenhead_grid WHERE "
-                       "grid = '{0}'".format(grid))
+        cursor.execute(f"SELECT ST_Centroid(geom) as geom FROM vectors.maidenhead_grid WHERE "
+                       "grid = '{grid}'")
 
     # Get the data out of the cursor
     data = {'geom': None,
@@ -151,7 +151,7 @@ def csv_to_dicts(csv_paths):
     n_records = 0
     file_records = []
     for file in csv_paths:
-        print("Processing {}".format(file))
+        print(f"Processing {file}")
 
         with open(file, 'r') as csv_file:
             reader = csv.reader(csv_file)
@@ -178,7 +178,7 @@ def csv_to_dicts(csv_paths):
                 file_records.append(wspr_record)
 
     n_records += len(file_records)
-    print("{0} records processed\n".format(n_records))
+    print(f"{n_records} records processed\n")
 
     return file_records
 

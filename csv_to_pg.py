@@ -63,7 +63,7 @@ def add_ops(ops):
 
         else:  # Replace grid with subgrid if possible, as it's more precise
             if len(pg_op.grid) < len(grid):
-                print("Updating grid for {0} with a more precise subgrid".format(op))
+                print(f"Updating grid for {op} with a more precise subgrid")
                 pg_op.grid = grid
                 pg_op.geom = get_operator_coords(grid)
 
@@ -154,8 +154,8 @@ def csv_chunk(csv_path, n_rows, processed_rows, processed_files):
         process(chunk)
         processed_rows += chunksize
         current_file_rows += chunksize
-        print("Processed {0} rows out of {1} from {2}. {3} total rows from {4} files".
-              format(current_file_rows, n_rows, csv_path, processed_rows, processed_files))
+        print(f"Processed {current_file_rows} rows out of {n_rows} from {csv_path}. {processed_rows} total rows from \
+        {processed_files} files")
 
     return processed_rows
 
@@ -167,7 +167,7 @@ def csv_processor(root_path):
         for file in filenames:
             if os.path.splitext(file)[1] == '.csv':
                 csv_path = os.path.join(root, file)
-                print("Processing {}".format(csv_path))
+                print(f"Processing {csv_path}")
                 sleep(3)
 
                 print("Counting all rows...")

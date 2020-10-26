@@ -44,7 +44,7 @@ def download_menu(url_list):
     for url in url_list:
         list_id += 1
 
-        print("{0}:\t{1}".format(list_id, url))
+        print(f"{list_id}:\t{url}")
 
     download_selection = input("IDs to download (0 for all): ")
 
@@ -72,7 +72,7 @@ def extract_gzip(input_file, output_path):
     :return: None
     """
 
-    print("Extracting {0} to {1}".format(input_file, output_path))
+    print(f"Extracting {input_file} to {output_path}")
     with gzip.open(input_file, 'rb') as f_in:
         with open(output_path, 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
@@ -91,7 +91,7 @@ def download_wspr_data(wanted_urls):
         os.makedirs(download_directory)
 
     for download_file in wanted_urls:
-        print("Downloading {}".format(download_file))
+        print(f"Downloading {download_file}")
         filename = os.path.basename(download_file)
         extracted_filename = os.path.splitext(filename)[0]
         download_path = os.path.join(download_directory, filename)
