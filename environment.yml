@@ -1,10 +1,12 @@
 name: GeoWSPR
 channels:
-  - defaults
   - conda-forge
+  - defaults
 dependencies:
   - sqlalchemy
   - geoalchemy2
   - pandas
   - beautifulsoup4
   - shapely
+  - psycopg2
+  - fiona
