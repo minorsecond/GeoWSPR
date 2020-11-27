@@ -1,11 +1,13 @@
+import configparser
 import os
 from time import sleep
-import configparser
+
 import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from wspr_pg_database import wsprContact, Base, operator, maidenhead_grid, maidenhead_subgrid
+from wspr_pg_database import wsprContact, Base, operator, maidenhead_grid, \
+    maidenhead_subgrid
 
 """
 Upload CSV files in directory to PG database
@@ -54,11 +56,13 @@ def add_ops(ops):
         base_grid = grid[:4]
 
         # Check if operator already exists in DB
-        pg_op = session.query(operator).filter(operator.callsign == op,
-                                               operator.grid.like(base_grid + '%')).first()
+        pg_op = session.query(operator). \
+            filter(operator.callsign == op,
+                   operator.grid.like(f"{base_grid}%")).first()
 
         if not pg_op:
-            new_operator = operator(callsign=op, grid=grid, geog=get_operator_coords(grid))
+            new_operator = operator(callsign=op, grid=grid,
+                                    geog=get_operator_coords(grid))
             session.add(new_operator)
 
         else:  # Replace grid with subgrid if possible, as it's more precise
