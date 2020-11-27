@@ -28,6 +28,8 @@ header = ('spot_id', 'timestamp', 'reporter', 'reporters_grid',
           'snr', 'frequency', 'call_sign', 'grid', 'power', 'drift',
           'distance', 'azimuth', 'band', 'version', 'code')
 
+processed_qsos = []
+
 
 def add_ops(ops):
     for i in range(0, 1):
@@ -114,10 +116,7 @@ def process(csv_chunk):
 
         add_ops(operators)  # upload the operators
 
-        # Check if contact already exists in DB
-        qso_exists = session.query(wsprContact.spot_id).filter_by(spot_id=spot_id).first() is not None
-
-        if not qso_exists:
+        if spot_id not in processed_qsos:
             new_qso = wsprContact(spot_id=spot_id,
                                   timestamp=timestamp,
                                   rx_call=reporter,
@@ -135,6 +134,7 @@ def process(csv_chunk):
                                   code=code)
 
             session.add(new_qso)
+            processed_qsos.append(spot_id)
     session.commit()
 
 
