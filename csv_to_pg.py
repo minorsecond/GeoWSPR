@@ -116,6 +116,12 @@ def process(csv_chunk):
 
         add_ops(operators)  # upload the operators
 
+        """
+        It might be better to store processed QSOs in a text file on disk,
+        as it would allow restarting the script if it fails or the OS reboots.
+        Currently, the list would be lost and the script would start over from
+        the beginning.
+        """
         if spot_id not in processed_qsos:
             new_qso = wsprContact(spot_id=spot_id,
                                   timestamp=timestamp,
