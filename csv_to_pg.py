@@ -1,4 +1,3 @@
-import configparser
 import os
 from time import sleep
 
@@ -6,6 +5,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+import conf_reader
 from wspr_pg_database import wsprContact, Base, operator, maidenhead_grid, \
     maidenhead_subgrid
 
@@ -13,20 +13,7 @@ from wspr_pg_database import wsprContact, Base, operator, maidenhead_grid, \
 Upload CSV files in directory to PG database
 """
 
-config = configparser.ConfigParser()
-config.read("config")
-
-db_user = config['DB']['db_user']
-db_pass = config['DB']['db_pass']
-db_host = config['DB']['db_host']
-db_name = config['DB']['db_name']
-
-print("DB Configuration:")
-print(f"DB User: {db_user}")
-print(f"DB Password: {db_pass}")
-print(f"DB Host: {db_host}")
-print(f"DB Name: {db_name}")
-print("-----------------------")
+db_user, db_pass, db_host, db_name = conf_reader.read_config()
 
 engine = create_engine(f'postgresql://{db_user}:{db_pass}@{db_host}/{db_name}')
 Base.metadata.bind = engine

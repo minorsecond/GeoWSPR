@@ -1,28 +1,17 @@
-from wspr_pg_database import Base, maidenhead_grid, maidenhead_subgrid
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-import fiona
-from shapely.geometry import shape
-from geoalchemy2.shape import from_shape
-import shapely.ops
 import os
 import pathlib
-import configparser
 
-config = configparser.ConfigParser()
-config.read("config")
+import fiona
+import shapely.ops
+from geoalchemy2.shape import from_shape
+from shapely.geometry import shape
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-db_user = config['DB']['db_user']
-db_pass = config['DB']['db_pass']
-db_host = config['DB']['db_host']
-db_name = config['DB']['db_name']
+import conf_reader
+from wspr_pg_database import Base, maidenhead_grid, maidenhead_subgrid
 
-print("DB Configuration:")
-print(f"DB User: {db_user}")
-print(f"DB Password: {db_pass}")
-print(f"DB Host: {db_host}")
-print(f"DB Name: {db_name}")
-print("-----------------------")
+db_user, db_pass, db_host, db_name = conf_reader.read_config()
 
 engine = create_engine(f'postgresql://{db_user}:{db_pass}@{db_host}/{db_name}')
 Base.metadata.bind = engine
