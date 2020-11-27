@@ -1,0 +1,10 @@
+name: GeoWSPR
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - sqlalchemy
+  - geoalchemy2
+  - pandas
+  - beautifulsoup4
+  - shapely
